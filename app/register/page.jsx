@@ -61,16 +61,20 @@ export default function Register() {
       {/* Left Side - Image */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-indigo-900 to-black"></div>
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1200')] bg-cover bg-center opacity-40"></div>
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-40"
+          style={{
+            backgroundImage: `url('/assets/background.png')`,
+          }}
+        ></div>
         <div className="relative z-10 flex flex-col justify-center items-center p-12 text-white">
-          <h1 className="text-5xl font-bold mb-4 text-center">Discover new things on Superapp</h1>
-          <p className="text-xl text-purple-200 text-center">Your all-in-one dashboard for entertainment, productivity, and more</p>
+          <h1 className="text-5xl mt-48 font-bold mb-4 text-center">Discover new things on Superapp</h1>
         </div>
       </div>
 
       {/* Right Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-12 bg-black">
-        <div className="w-full max-w-md">
+        <div className="w-full" style={{ maxWidth: '518px' }}>
           <h2 className="text-3xl font-bold text-white mb-8">Create your account</h2>
           
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -82,6 +86,11 @@ export default function Register() {
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                 placeholder="Enter your full name"
+                style={{
+                  width: '518px',
+                  height: '64.87px',
+                  borderRadius: '3.82px'
+                }}
               />
               {errors.name && <span className="error-text text-red-500 text-sm mt-1 block">{errors.name}</span>}
             </div>
@@ -94,6 +103,11 @@ export default function Register() {
                 onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                 className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                 placeholder="Choose a username"
+                style={{
+                  width: '518px',
+                  height: '64.87px',
+                  borderRadius: '3.82px'
+                }}
               />
               {errors.username && <span className="error-text text-red-500 text-sm mt-1 block">{errors.username}</span>}
             </div>
@@ -106,12 +120,17 @@ export default function Register() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                 placeholder="Enter your email"
+                style={{
+                  width: '518px',
+                  height: '64.87px',
+                  borderRadius: '3.82px'
+                }}
               />
               {errors.email && <span className="error-text text-red-500 text-sm mt-1 block">{errors.email}</span>}
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Mobile Number</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Mobile Number </label>
               <input
                 type="text"
                 value={formData.mobile}
@@ -119,6 +138,11 @@ export default function Register() {
                 className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                 placeholder="10-digit mobile number"
                 maxLength={10}
+                style={{
+                  width: '518px',
+                  height: '64.87px',
+                  borderRadius: '3.82px'
+                }}
               />
               {errors.mobile && <span className="error-text text-red-500 text-sm mt-1 block">{errors.mobile}</span>}
             </div>
@@ -138,14 +162,20 @@ export default function Register() {
             
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              className="w-full text-white font-semibold transition-all duration-200"
+              style={{
+                width: '518px',
+                height: '55px',
+                borderRadius: '28px',
+                backgroundColor: '#72DB73'
+              }}
             >
               SIGN UP
             </button>
 
             <div className="text-center space-y-2 text-sm text-gray-400">
               <p>
-                By clicking "Sign up", you agree to our{' '}
+                By clicking on Sign up. you agree to Superapp Terms and Conditions of Use{' '}
                 <a href="#" className="text-purple-400 hover:text-purple-300">Terms and Conditions of Use</a>
               </p>
               <p>
