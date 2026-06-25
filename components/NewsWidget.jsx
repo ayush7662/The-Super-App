@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { fetchTopHeadlines } from '../lib/apiServices'
 
 export default function NewsWidget() {
   const [articles, setArticles] = useState([])
@@ -9,15 +8,19 @@ export default function NewsWidget() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const apiKey = process.env.NEXT_PUBLIC_NEWS_API_KEY || 'demo'
-
   useEffect(() => {
     const loadNews = async () => {
       try {
         setLoading(true)
-        const data = await fetchTopHeadlines('general', apiKey)
-        setArticles(data)
-        setError(null)
+        const response = await fetch('/api/news?category=general')
+        const data = await response.json()
+        
+        if (response.ok) {
+          setArticles(data)
+          setError(null)
+        } else {
+          setError(data.error || 'Failed to load news')
+        }
       } catch (err) {
         setError('Failed to load news')
         console.error(err)
@@ -27,7 +30,7 @@ export default function NewsWidget() {
     }
 
     loadNews()
-  }, [apiKey])
+  }, [])
 
   useEffect(() => {
     if (articles.length > 0) {
