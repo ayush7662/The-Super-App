@@ -1,6 +1,8 @@
 # The Super App
 
-A comprehensive multi-feature React application built with Next.js 15 (App Router) that combines user registration, category selection, weather updates, news, notes, timers, and entertainment recommendations into a single cohesive dashboard.
+A comprehensive multi-feature React application built with Next.js 15  that combines user registration, category selection, weather updates, news, notes, timers, and entertainment recommendations into a single cohesive dashboard.
+
+## Live Url: https://the-super-app-riye.vercel.app/register
 
 ## 🚀 Features
 
