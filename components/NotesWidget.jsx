@@ -5,36 +5,44 @@ import { useStore } from '../store/useStore'
 export default function NotesWidget() {
   const { notes, setNotes } = useStore()
 
-  const handleNoteChange = (e) => {
-    setNotes(e.target.value)
-  }
-
-  const handleClear = () => {
-    setNotes('')
-  }
-
   return (
-    <div className="bg-gradient-to-br from-orange-500 to-amber-600 rounded-2xl p-6 shadow-lg text-white">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-bold">All Notes</h3>
-        <button
-          onClick={handleClear}
-          className="text-sm bg-white/20 px-3 py-1 rounded-lg hover:bg-white/30 transition-all"
-        >
-          Clear
-        </button>
-      </div>
-      
+    <div
+      className="rounded-[19px] bg-[#F1C75B] p-8"
+      style={{
+        width: '470px',
+        height: '535px',
+      }}
+    >
+      <h2
+        className="font-bold text-black"
+        style={{
+          fontSize: '40px',
+          lineHeight: '100%',
+        }}
+      >
+        All notes
+      </h2>
+
       <textarea
         value={notes}
-        onChange={handleNoteChange}
-        placeholder="Write your notes here..."
-        className="w-full h-32 px-4 py-3 rounded-lg bg-white/20 placeholder-white/50 text-white resize-none focus:outline-none focus:ring-2 focus:ring-white/50"
+        onChange={(e) => setNotes(e.target.value)}
+        placeholder="Write your notes..."
+        className="
+          mt-8
+          w-full
+          h-[420px]
+          bg-transparent
+          resize-none
+          outline-none
+          text-black
+          placeholder:text-black/60
+          leading-9
+        "
+        style={{
+          fontSize: '26px',
+          fontWeight: 400,
+        }}
       />
-      
-      <p className="text-xs text-orange-100 mt-2">
-        Notes are automatically saved to your browser
-      </p>
     </div>
   )
 }

@@ -1,119 +1,125 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function TimerWidget() {
-  const [hours, setHours] = useState(0)
-  const [minutes, setMinutes] = useState(5)
+  const [hours, setHours] = useState(5)
+  const [minutes, setMinutes] = useState(9)
   const [seconds, setSeconds] = useState(0)
-  const [isRunning, setIsRunning] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(minutes * 60)
-  const intervalRef = useRef(null)
+  const [running, setRunning] = useState(false)
 
   useEffect(() => {
-    setTimeLeft(hours * 3600 + minutes * 60 + seconds)
-  }, [hours, minutes, seconds])
+    if (!running) return
 
-  useEffect(() => {
-    if (isRunning && timeLeft > 0) {
-      intervalRef.current = setInterval(() => {
-        setTimeLeft((prev) => prev - 1)
-      }, 1000)
-    } else if (timeLeft === 0) {
-      setIsRunning(false)
-      alert('Timer finished!')
-    }
+    const interval = setInterval(() => {
+      if (hours === 0 && minutes === 0 && seconds === 0) {
+        setRunning(false)
+        return
+      }
 
-    return () => clearInterval(intervalRef.current)
-  }, [isRunning, timeLeft])
+      if (seconds > 0) {
+        setSeconds((s) => s - 1)
+      } else if (minutes > 0) {
+        setMinutes((m) => m - 1)
+        setSeconds(59)
+      } else if (hours > 0) {
+        setHours((h) => h - 1)
+        setMinutes(59)
+        setSeconds(59)
+      }
+    }, 1000)
 
-  const formatTime = (totalSeconds) => {
-    const h = Math.floor(totalSeconds / 3600)
-    const m = Math.floor((totalSeconds % 3600) / 60)
-    const s = totalSeconds % 60
-    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
-  }
+    return () => clearInterval(interval)
+  }, [running, hours, minutes, seconds])
 
-  const handleStart = () => {
-    if (timeLeft > 0) setIsRunning(true)
-  }
+  const pad = (n) => n.toString().padStart(2, '0')
 
-  const handlePause = () => {
-    setIsRunning(false)
-  }
+  const NumberSelector = ({ value, setValue, max }) => (
+    <div className="flex flex-col items-center">
+      <button
+        onClick={() => !running && setValue((v) => Math.min(max, v + 1))}
+        className="text-gray-400 text-2xl hover:text-white"
+      >
+        ▲
+      </button>
 
-  const handleReset = () => {
-    setIsRunning(false)
-    setTimeLeft(hours * 3600 + minutes * 60 + seconds)
-  }
+      <div className="text-white text-6xl font-light">
+        {pad(value)}
+      </div>
+
+      <button
+        onClick={() => !running && setValue((v) => Math.max(0, v - 1))}
+        className="text-gray-400 text-2xl hover:text-white"
+      >
+        ▼
+      </button>
+    </div>
+  )
 
   return (
-    <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-6 shadow-lg text-white">
-      <h3 className="text-xl font-bold mb-4">Countdown Timer</h3>
-      
-      <div className="text-5xl font-bold text-center mb-6 font-mono">
-        {formatTime(timeLeft)}
-      </div>
+    <div
+      className="rounded-[19px] bg-[#1F2348] flex items-center justify-between px-10"
+      style={{
+        width: '1038px',
+        height: '333px',
+      }}
+    >
+      {/* Circle */}
 
-      <div className="grid grid-cols-3 gap-2 mb-4">
-        <div>
-          <label className="text-xs text-green-100 block mb-1">Hours</label>
-          <input
-            type="number"
-            value={hours}
-            onChange={(e) => setHours(Math.max(0, parseInt(e.target.value) || 0))}
-            disabled={isRunning}
-            className="w-full px-2 py-2 rounded bg-white/20 text-center font-bold"
-            min="0"
-          />
-        </div>
-        <div>
-          <label className="text-xs text-green-100 block mb-1">Minutes</label>
-          <input
-            type="number"
-            value={minutes}
-            onChange={(e) => setMinutes(Math.max(0, Math.min(59, parseInt(e.target.value) || 0)))}
-            disabled={isRunning}
-            className="w-full px-2 py-2 rounded bg-white/20 text-center font-bold"
-            min="0"
-            max="59"
-          />
-        </div>
-        <div>
-          <label className="text-xs text-green-100 block mb-1">Seconds</label>
-          <input
-            type="number"
-            value={seconds}
-            onChange={(e) => setSeconds(Math.max(0, Math.min(59, parseInt(e.target.value) || 0)))}
-            disabled={isRunning}
-            className="w-full px-2 py-2 rounded bg-white/20 text-center font-bold"
-            min="0"
-            max="59"
-          />
+      <div className="w-[250px] h-[250px] rounded-full bg-[#171B3B] flex items-center justify-center shadow-inner">
+        <div className="w-[190px] h-[190px] rounded-full border-[6px] border-[#FF6A6A] flex items-center justify-center">
+          <span className="text-white text-5xl font-semibold">
+            {pad(hours)}:{pad(minutes)}:{pad(seconds)}
+          </span>
         </div>
       </div>
 
-      <div className="flex gap-2">
+      {/* Selectors */}
+
+      <div className="flex flex-col items-center">
+
+        <div className="flex items-center gap-16">
+
+          <div className="text-center">
+            <p className="text-gray-400 text-2xl mb-6">Hours</p>
+            <NumberSelector
+              value={hours}
+              setValue={setHours}
+              max={23}
+            />
+          </div>
+
+          <div className="text-white text-6xl mt-16">:</div>
+
+          <div className="text-center">
+            <p className="text-gray-400 text-2xl mb-6">Minutes</p>
+            <NumberSelector
+              value={minutes}
+              setValue={setMinutes}
+              max={59}
+            />
+          </div>
+
+          <div className="text-white text-6xl mt-16">:</div>
+
+          <div className="text-center">
+            <p className="text-gray-400 text-2xl mb-6">Seconds</p>
+            <NumberSelector
+              value={seconds}
+              setValue={setSeconds}
+              max={59}
+            />
+          </div>
+
+        </div>
+
         <button
-          onClick={handleStart}
-          disabled={isRunning || timeLeft === 0}
-          className="flex-1 bg-white text-green-600 py-2 rounded-lg font-semibold hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          onClick={() => setRunning(!running)}
+          className="mt-10 w-[500px] h-[60px] rounded-full bg-[#FF6A6A] text-white text-3xl font-medium hover:bg-[#ff5555]"
         >
-          Start
+          {running ? 'Pause' : 'Start'}
         </button>
-        <button
-          onClick={handlePause}
-          disabled={!isRunning}
-          className="flex-1 bg-white/20 py-2 rounded-lg font-semibold hover:bg-white/30 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-        >
-          Pause
-        </button>
-        <button
-          onClick={handleReset}
-          className="flex-1 bg-white/20 py-2 rounded-lg font-semibold hover:bg-white/30 transition-all"
-        >
-          Reset
-        </button>
+
       </div>
     </div>
   )
