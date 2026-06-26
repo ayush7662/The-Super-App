@@ -34,93 +34,109 @@ export default function TimerWidget() {
 
   const pad = (n) => n.toString().padStart(2, '0')
 
-  const NumberSelector = ({ value, setValue, max }) => (
+  const Selector = ({ title, value, setValue, max }) => (
     <div className="flex flex-col items-center">
+
+      <p className="text-[#A9A9C8] text-[28px] mb-4">
+        {title}
+      </p>
+
       <button
-        onClick={() => !running && setValue((v) => Math.min(max, v + 1))}
-        className="text-gray-400 text-2xl hover:text-white"
+        onClick={() => !running && setValue(v => Math.min(max, v + 1))}
+        className="text-[#8B8BAF] text-3xl"
       >
         ▲
       </button>
 
-      <div className="text-white text-6xl font-light">
+      <div className="text-white text-[56px] font-light leading-none my-3">
         {pad(value)}
       </div>
 
       <button
-        onClick={() => !running && setValue((v) => Math.max(0, v - 1))}
-        className="text-gray-400 text-2xl hover:text-white"
+        onClick={() => !running && setValue(v => Math.max(0, v - 1))}
+        className="text-[#8B8BAF] text-3xl"
       >
         ▼
       </button>
+
     </div>
   )
 
   return (
     <div
-      className="rounded-[19px] bg-[#1F2348] flex items-center justify-between px-10"
       style={{
         width: '1038px',
         height: '333px',
+        background: '#1E2343',
+        borderRadius: '19px',
       }}
+      className="flex items-center px-10"
     >
       {/* Circle */}
 
-      <div className="w-[250px] h-[250px] rounded-full bg-[#171B3B] flex items-center justify-center shadow-inner">
-        <div className="w-[190px] h-[190px] rounded-full border-[6px] border-[#FF6A6A] flex items-center justify-center">
-          <span className="text-white text-5xl font-semibold">
-            {pad(hours)}:{pad(minutes)}:{pad(seconds)}
-          </span>
+      <div className="mr-20">
+
+        <div className="w-[230px] h-[230px] rounded-full bg-[#191D3A] flex items-center justify-center shadow-[0_0_40px_rgba(0,0,0,.4)]">
+
+          <div className="w-[180px] h-[180px] rounded-full border-[6px] border-[#FF6B6B] flex items-center justify-center">
+
+            <span className="text-white text-[44px] font-semibold tracking-wide">
+              {pad(hours)}:{pad(minutes)}:{pad(seconds)}
+            </span>
+
+          </div>
+
         </div>
+
       </div>
 
-      {/* Selectors */}
+      {/* Timer Controls */}
 
-      <div className="flex flex-col items-center">
+      <div className="flex-1 flex flex-col items-center">
 
-        <div className="flex items-center gap-16">
+        <div className="flex items-start gap-16">
 
-          <div className="text-center">
-            <p className="text-gray-400 text-2xl mb-6">Hours</p>
-            <NumberSelector
-              value={hours}
-              setValue={setHours}
-              max={23}
-            />
-          </div>
+          <Selector
+            title="Hours"
+            value={hours}
+            setValue={setHours}
+            max={23}
+          />
 
-          <div className="text-white text-6xl mt-16">:</div>
+          <div className="text-white text-[58px] mt-[70px]">:</div>
 
-          <div className="text-center">
-            <p className="text-gray-400 text-2xl mb-6">Minutes</p>
-            <NumberSelector
-              value={minutes}
-              setValue={setMinutes}
-              max={59}
-            />
-          </div>
+          <Selector
+            title="Minutes"
+            value={minutes}
+            setValue={setMinutes}
+            max={59}
+          />
 
-          <div className="text-white text-6xl mt-16">:</div>
+          <div className="text-white text-[58px] mt-[70px]">:</div>
 
-          <div className="text-center">
-            <p className="text-gray-400 text-2xl mb-6">Seconds</p>
-            <NumberSelector
-              value={seconds}
-              setValue={setSeconds}
-              max={59}
-            />
-          </div>
+          <Selector
+            title="Seconds"
+            value={seconds}
+            setValue={setSeconds}
+            max={59}
+          />
 
         </div>
 
         <button
           onClick={() => setRunning(!running)}
-          className="mt-10 w-[500px] h-[60px] rounded-full bg-[#FF6A6A] text-white text-3xl font-medium hover:bg-[#ff5555]"
+          className="mt-8 rounded-full text-white text-[32px] font-medium"
+          style={{
+            width: '420px',
+            height: '60px',
+            background: '#FF6A6A',
+          }}
         >
           {running ? 'Pause' : 'Start'}
         </button>
 
       </div>
+
     </div>
   )
 }

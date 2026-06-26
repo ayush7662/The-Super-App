@@ -6,24 +6,18 @@ export default function NewsWidget() {
   const [articles, setArticles] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
 
   useEffect(() => {
-    const loadNews = async () => {
+    async function loadNews() {
       try {
-        setLoading(true)
         const response = await fetch('/api/news?category=general')
         const data = await response.json()
-        
+
         if (response.ok) {
           setArticles(data)
-          setError(null)
-        } else {
-          setError(data.error || 'Failed to load news')
         }
-      } catch (err) {
-        setError('Failed to load news')
-        console.error(err)
+      } catch (error) {
+        console.error(error)
       } finally {
         setLoading(false)
       }
@@ -36,7 +30,7 @@ export default function NewsWidget() {
     if (articles.length > 0) {
       const interval = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % articles.length)
-      }, 2000)
+      }, 5000)
 
       return () => clearInterval(interval)
     }
@@ -44,19 +38,32 @@ export default function NewsWidget() {
 
   if (loading) {
     return (
-      <div className="bg-gray-800 rounded-2xl p-6 shadow-lg">
-        <div className="animate-pulse">
-          <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
-          <div className="h-3 bg-gray-700 rounded w-full"></div>
-        </div>
+      <div
+        style={{
+          width: '464px',
+          height: '907px',
+          borderRadius: '19px',
+          background: '#FFFFFF',
+        }}
+        className="flex items-center justify-center"
+      >
+        Loading...
       </div>
     )
   }
 
-  if (error || articles.length === 0) {
+  if (articles.length === 0) {
     return (
-      <div className="bg-gray-800 rounded-2xl p-6 shadow-lg">
-        <p className="text-red-400 text-center">{error || 'No news available'}</p>
+      <div
+        style={{
+          width: '464px',
+          height: '907px',
+          borderRadius: '19px',
+          background: '#FFFFFF',
+        }}
+        className="flex items-center justify-center"
+      >
+        No News Available
       </div>
     )
   }
@@ -64,24 +71,62 @@ export default function NewsWidget() {
   const article = articles[currentIndex]
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-lg text-gray-900">
-      {article.urlToImage && (
+    <div
+      style={{
+        width: '464px',
+        height: '907px',
+        borderRadius: '19px',
+      }}
+      className="overflow-hidden bg-white"
+    >
+      {/* Image Section */}
+      <div className="relative h-[520px]">
         <img
-          src={article.urlToImage}
+          src={article.urlToImage || '/news-placeholder.jpg'}
           alt={article.title}
-          className="w-full h-48 object-cover"
+          className="w-full h-full object-cover"
         />
-      )}
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-3 text-sm text-gray-500">
-          <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
-          <span>{new Date(article.publishedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/30 flex flex-col justify-end p-6 text-white">
+
+          <p className="text-[15px]">
+            {new Date(article.publishedAt).toLocaleDateString()}
+          </p>
+
+          <p className="text-[15px] mb-4">
+            {new Date(article.publishedAt).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </p>
+
+          <h2 className="text-[26px] font-bold leading-8">
+            {article.title}
+          </h2>
         </div>
-        <h4 className="text-xl font-bold mb-3">{article.title}</h4>
-        <p className="text-gray-600 line-clamp-3">{article.description}</p>
-        <button className="mt-4 text-purple-600 font-semibold hover:text-purple-800 transition-colors">
-          Browse
-        </button>
+      </div>
+
+      {/* Description */}
+      <div className="px-6 py-6 h-[387px] flex flex-col justify-between">
+
+        <p className="text-[#272727] text-[20px] leading-8 overflow-hidden">
+          {article.description}
+        </p>
+
+        <div className="flex justify-end">
+          <button
+            className="text-white text-[24px] font-semibold rounded-[34px]"
+            style={{
+              background: '#148A08',
+              width: '179px',
+              height: '50px',
+            }}
+          >
+            Browse
+          </button>
+        </div>
+
       </div>
     </div>
   )

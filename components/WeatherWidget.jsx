@@ -6,21 +6,17 @@ import { fetchCurrentWeather } from '../lib/apiServices'
 export default function WeatherWidget() {
   const [weather, setWeather] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
 
-  const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY || 'demo'
+  const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY || ''
   const city = 'London'
 
   useEffect(() => {
-    const loadWeather = async () => {
+    async function loadWeather() {
       try {
-        setLoading(true)
         const data = await fetchCurrentWeather(city, apiKey)
         setWeather(data)
-        setError(null)
-      } catch (err) {
-        setError('Failed to load weather data')
-        console.error(err)
+      } catch (error) {
+        console.error(error)
       } finally {
         setLoading(false)
       }
@@ -31,61 +27,124 @@ export default function WeatherWidget() {
 
   if (loading) {
     return (
-      <div className="bg-gray-800 rounded-2xl p-6 shadow-lg">
-        <div className="animate-pulse flex space-x-4">
-          <div className="flex-1 space-y-4 py-1">
-            <div className="h-4 bg-gray-700 rounded w-3/4"></div>
-            <div className="space-y-2">
-              <div className="h-4 bg-gray-700 rounded"></div>
-              <div className="h-4 bg-gray-700 rounded w-5/6"></div>
-            </div>
-          </div>
-        </div>
+      <div
+        style={{
+          height: '177px',
+          background: '#101744',
+          borderTopLeftRadius: '19px',
+          borderTopRightRadius: '19px',
+          maxWidth: '507px',
+        }}
+        className="w-full flex items-center justify-center text-white"
+      >
+        Loading...
       </div>
     )
   }
 
-  if (error) {
+  if (!weather) {
     return (
-      <div className="bg-gray-800 rounded-2xl p-6 shadow-lg">
-        <p className="text-red-400 text-center">{error}</p>
+      <div
+        style={{
+          height: '177px',
+          background: '#101744',
+          borderTopLeftRadius: '19px',
+          borderTopRightRadius: '19px',
+          maxWidth: '507px',
+        }}
+        className="w-full flex items-center justify-center text-white"
+      >
+        Failed to load weather
       </div>
     )
   }
 
   return (
-    <div className="bg-gradient-to-br from-pink-500 to-purple-900 rounded-2xl p-6 shadow-lg text-white">
-      <div className="flex justify-between items-center mb-4">
+    <div
+      style={{
+        height: '177px',
+        borderTopLeftRadius: '19px',
+        borderTopRightRadius: '19px',
+        overflow: 'hidden',
+        maxWidth: '507px',
+      }}
+      className="w-full"
+    >
+      {/* Pink Header */}
+      <div
+        style={{
+          background: '#FF4ADE',
+          height: '68px',
+        }}
+        className="flex justify-between items-center px-8 text-white"
+      >
         <div>
-          <p className="text-sm text-pink-200">Date</p>
-          <p className="text-lg font-semibold">{new Date().toLocaleDateString()}</p>
+          <h3 className="text-[18px] font-semibold">
+            {new Date().toLocaleDateString()}
+          </h3>
+          <p className="text-sm">Date</p>
         </div>
-        <div>
-          <p className="text-sm text-pink-200">Time</p>
-          <p className="text-lg font-semibold">{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
+
+        <div className="text-right">
+          <h3 className="text-[18px] font-semibold">
+            {weather.weather[0].main}
+          </h3>
+          <p className="text-sm">Weather</p>
         </div>
       </div>
-      
-      <div className="grid grid-cols-3 gap-4">
-        <div className="text-center">
-          <div className="text-4xl mb-2">⛈️</div>
-          <p className="text-sm font-semibold capitalize">{weather.weather[0].description}</p>
+
+      {/* Dark Bottom */}
+      <div
+        style={{
+          background: '#101744',
+          height: '109px',
+        }}
+        className="grid grid-cols-4 text-white"
+      >
+        {/* Icon */}
+        <div className="flex items-center justify-center border-r border-white/20">
+          <span className="text-5xl">⛅</span>
         </div>
-        
-        <div className="text-center">
-          <p className="text-3xl font-bold">{Math.round(weather.main.temp)}°C</p>
-          <p className="text-xs text-pink-200">{weather.main.pressure} mbar Pressure</p>
+
+        {/* Temperature */}
+        <div className="flex flex-col justify-center px-4 border-r border-white/20">
+          <h2 className="text-[32px] font-bold leading-none">
+            {Math.round(weather.main.temp)}°C
+          </h2>
+
+          <p className="text-xs text-gray-300 mt-2">
+            {weather.main.pressure} mbar
+          </p>
+
+          <p className="text-xs text-gray-300">
+            Pressure
+          </p>
         </div>
-        
-        <div className="text-center space-y-1">
-          <div className="flex items-center justify-center gap-1">
-            <span className="text-xl">💨</span>
-            <p className="text-sm">{weather.wind.speed} km/h Wind</p>
-          </div>
-          <div className="flex items-center justify-center gap-1">
-            <span className="text-xl">💧</span>
-            <p className="text-sm">{weather.main.humidity}% Humidity</p>
-          </div>
+
+        {/* Wind */}
+        <div className="flex flex-col justify-center px-4 border-r border-white/20">
+          <div className="text-2xl">💨</div>
+
+          <p className="text-sm mt-1">
+            {weather.wind.speed} km/h
+          </p>
+
+          <p className="text-xs text-gray-300">
+            Wind
+          </p>
+        </div>
+
+        {/* Humidity */}
+        <div className="flex flex-col justify-center px-4">
+          <div className="text-2xl">💧</div>
+
+          <p className="text-sm mt-1">
+            {weather.main.humidity}%
+          </p>
+
+          <p className="text-xs text-gray-300">
+            Humidity
+          </p>
         </div>
       </div>
     </div>

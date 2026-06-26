@@ -68,13 +68,13 @@ export default function Register() {
           }}
         ></div>
         <div className="relative z-10 flex flex-col justify-center items-center p-12 text-white">
-          <h1 className="text-5xl mt-48 font-bold mb-4 text-center">Discover new things on Superapp</h1>
+          <h1 className="text-5xl font-bold mb-4 text-center">Discover new things on Superapp</h1>
         </div>
       </div>
 
       {/* Right Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-12 bg-black">
-        <div className="w-full" style={{ maxWidth: '518px' }}>
+        <div className="w-full max-w-md">
           <h2 className="text-3xl font-bold text-white mb-8">Create your account</h2>
           
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -87,7 +87,6 @@ export default function Register() {
                 className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                 placeholder="Enter your full name"
                 style={{
-                  width: '518px',
                   height: '64.87px',
                   borderRadius: '3.82px'
                 }}
@@ -104,7 +103,6 @@ export default function Register() {
                 className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                 placeholder="Choose a username"
                 style={{
-                  width: '518px',
                   height: '64.87px',
                   borderRadius: '3.82px'
                 }}
@@ -121,7 +119,6 @@ export default function Register() {
                 className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                 placeholder="Enter your email"
                 style={{
-                  width: '518px',
                   height: '64.87px',
                   borderRadius: '3.82px'
                 }}
@@ -139,7 +136,6 @@ export default function Register() {
                 placeholder="10-digit mobile number"
                 maxLength={10}
                 style={{
-                  width: '518px',
                   height: '64.87px',
                   borderRadius: '3.82px'
                 }}
@@ -164,7 +160,6 @@ export default function Register() {
               type="submit"
               className="w-full text-white font-semibold transition-all duration-200"
               style={{
-                width: '518px',
                 height: '55px',
                 borderRadius: '28px',
                 backgroundColor: '#72DB73'

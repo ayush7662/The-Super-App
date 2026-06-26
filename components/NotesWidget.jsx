@@ -7,10 +7,10 @@ export default function NotesWidget() {
 
   return (
     <div
-      className="rounded-[19px] bg-[#F1C75B] p-8"
+      className="rounded-[19px] bg-[#F1C75B] p-8 w-full"
       style={{
-        width: '470px',
         height: '535px',
+        maxWidth: '470px',
       }}
     >
       <h2
