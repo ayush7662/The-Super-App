@@ -19,57 +19,64 @@ export default function Dashboard() {
     }
   }, [user, categories, router])
 
-  return (
-    <div className="min-h-screen p-8 lg:p-12 bg-black">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 
-            className="text-[#72DB73]"
-            style={{
-              fontFamily: 'Single Day, cursive, sans-serif',
-              fontWeight: '400',
-              fontStyle: 'normal',
-              fontSize: '47.33px',
-              lineHeight: '140%',
-              letterSpacing: '0%'
-            }}
-          >
-            Super app
-          </h1>
-          <button
-            onClick={() => router.push('/movies')}
-            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
-          >
-            Explore Movies
-          </button>
-        </div>
+  
+    return (
+  <div className="min-h-screen bg-black p-8">
+    <div className="mx-auto max-w-[1700px]">
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column */}
-          <div className="space-y-6">
-            {/* User Profile */}
-            <UserProfile />
-            
-            {/* Weather Widget */}
-            <WeatherWidget />
-            
-            {/* Timer Widget */}
+      {/* Header */}
+      <div className="flex justify-between items-center mb-8">
+        <h1
+          className="text-[#72DB73]"
+          style={{
+            fontFamily: 'Single Day',
+            fontSize: '47px',
+          }}
+        >
+          Super app
+        </h1>
+
+        <button
+          onClick={() => router.push('/movies')}
+          className="bg-[#148A08] text-white px-6 py-3 rounded-full"
+        >
+          Browse
+        </button>
+      </div>
+
+      {/* Dashboard */}
+      <div className="flex gap-10 items-start">
+
+        {/* Left Side */}
+        <div className="flex flex-col">
+
+          {/* Profile + Notes */}
+          <div className="flex gap-8">
+
+            <div className="flex flex-col gap-6">
+              <UserProfile />
+              <WeatherWidget />
+            </div>
+
+            <NotesWidget />
+
+          </div>
+
+          {/* Timer */}
+          <div className="mt-6">
             <TimerWidget />
           </div>
 
-          {/* Middle Column */}
-          <div className="space-y-6">
-            {/* Notes Widget - Middle */}
-            <NotesWidget />
-          </div>
-
-          {/* Right Column */}
-          <div className="space-y-6">
-            {/* News Widget */}
-            <NewsWidget />
-          </div>
         </div>
+
+        {/* News */}
+        <div>
+          <NewsWidget />
+        </div>
+
       </div>
+
     </div>
-  )
+  </div>
+)
 }

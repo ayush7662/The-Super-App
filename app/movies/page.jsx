@@ -84,7 +84,7 @@ export default function Movies() {
           </div>
         </div>
         
-        <h1 className="text-2xl font-bold text-white mb-8">Entertainment according to your choice</h1>
+        <h1 className="text-2xl ml-10 font-bold text-white mb-8">Entertainment according to your choice</h1>
 
         {error && (
           <div className="bg-red-500/20 border border-red-500 rounded-lg p-4 mb-6">
