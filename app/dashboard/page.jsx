@@ -40,7 +40,7 @@ export default function Dashboard() {
           onClick={() => router.push('/movies')}
           className="bg-[#148A08] text-white px-6 py-3 rounded-full"
         >
-          Browse
+          Next Page
         </button>
       </div>
 

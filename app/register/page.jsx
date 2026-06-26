@@ -75,7 +75,21 @@ export default function Register() {
       {/* Right Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-12 bg-black">
         <div className="w-full max-w-md">
-          <h2 className="text-3xl font-bold text-white mb-8">Create your account</h2>
+          <h2 
+            className="text-[#72DB73] ml-20"
+            style={{
+              fontFamily: 'Single Day, cursive, sans-serif',
+              fontWeight: '400',
+              fontStyle: 'normal',
+              fontSize: '47.33px',
+              lineHeight: '140%',
+              letterSpacing: '0%',
+              
+            }}
+          >
+            Super app
+          </h2>
+          <h2 className="text-3xl ml-10 font-bold text-white mb-8">Create your account</h2>
           
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
